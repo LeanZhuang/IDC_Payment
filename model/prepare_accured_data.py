@@ -11,7 +11,7 @@ import pandas as pd
 def prepare_accured_data():
     # 设置下载文件夹路径和目标文件夹路径
     download_folder = "/Users/zhuangyuhao/Downloads"
-    desktop_folder = "/Users/zhuangyuhao/Desktop"
+    middle_folder = "temp"
 
     # 获取下载文件夹内最新的xls文件
     latest_file = max(glob.glob(os.path.join(download_folder, "*.xls")), key=os.path.getctime)
@@ -20,7 +20,7 @@ def prepare_accured_data():
     df = pd.read_excel(latest_file)
 
     # 构建目标文件路径，将文件后缀名改为xlsx
-    target_file = os.path.join(desktop_folder, os.path.basename(latest_file).replace(".xls", ".xlsx"))
+    target_file = os.path.join(middle_folder, os.path.basename(latest_file).replace(".xls", ".xlsx"))
 
     # 将数据保存为xlsx文件
     df.to_excel(target_file, index=False)
@@ -29,11 +29,11 @@ def prepare_accured_data():
     del df
 
 
-    # 获取桌面上最新的 xlsx 文件路径
-    desktop_path = os.path.expanduser("~/Desktop")
-    files = [f for f in os.listdir(desktop_path) if f.endswith(".xlsx")]
-    latest_file = max(files, key=lambda x: os.path.getctime(os.path.join(desktop_path, x)))
-    file_path = os.path.join(desktop_path, latest_file)
+    # 获取最新的 xlsx 文件路径
+    temp_path = os.path.expanduser("/Users/zhuangyuhao/VSCodeProjects/IDC_Payment/temp")
+    files = [f for f in os.listdir(temp_path) if f.endswith(".xlsx")]
+    latest_file = max(files, key=lambda x: os.path.getctime(os.path.join(temp_path, x)))
+    file_path = os.path.join(temp_path, latest_file)
 
     # 加载工作簿
     workbook = load_workbook(file_path)
@@ -41,11 +41,6 @@ def prepare_accured_data():
 
     # 定义值和公式所在的区域范围
     last_row = sheet.max_row
-
-    start_row = last_row + 1
-    end_row = last_row + 4
-    start_col = 'E'
-    end_col = 'G'
 
     word_list = ['非带宽小计', '带宽小计', '合计', '付款申请与对账单核对']
 

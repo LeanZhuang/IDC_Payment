@@ -6,18 +6,17 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, PatternFill
 import model.accrued_expense_data as accrued_expense_data
+import model.prepare_accured_data as prepare_accured_data
 
 
 # 加载预提表
 no_bandwidth_list, bandwidth_list = accrued_expense_data.prepare_accured()
 
+accured_table = prepare_accured_data.prepare_accured_data()
+accured_table.save('./temp/中间底稿.xlsx')
 
-desktop_path = os.path.expanduser("./middle_data")
-files = [f for f in os.listdir(desktop_path) if f.endswith(".xlsx")]
-latest_file = max(files, key=lambda x: os.path.getctime(os.path.join(desktop_path, x)))
-file_path = os.path.join(desktop_path, latest_file)
 
-check = pd.read_excel(file_path)
+check = pd.read_excel('./temp/中间底稿.xlsx')
 
 
 contract_id = check['合同编号'].to_list()
@@ -56,14 +55,14 @@ no_bandwidth_need = no_bandwidth_need[no_bandwidth_need['费用期间'].isin(per
 
 
 # 保存中间表
-bandwidth_need.to_excel('/Users/zhuangyuhao/Downloads/带宽.xlsx', index=False)
-no_bandwidth_need.to_excel('/Users/zhuangyuhao/Downloads/非带宽.xlsx', index=False)
+bandwidth_need.to_excel('./middle_data/带宽.xlsx', index=False)
+no_bandwidth_need.to_excel('./middle_data/非带宽.xlsx', index=False)
 
 
 # 格式化带宽预提
 
 # 加载工作簿
-workbook = load_workbook('/Users/zhuangyuhao/Downloads/带宽.xlsx')
+workbook = load_workbook('./middle_data/带宽.xlsx')
 sheet = workbook.active
 
 # 定义值和公式所在的区域范围
@@ -82,25 +81,13 @@ for key, value in col_list.items():
     sheet[cell] = value  # 输入值到单元格
     sheet[cell].fill = fill
 
-
-# row = last_row + 3
-# cell = f'E{row}'
-# sheet[cell] = f'=(D{row}-C{row})/D{row}'
-
-# cell = f'F{row}'
-# sheet[cell] = f'=AVERAGE(C{row},D{row})'
-
-# cell = f'I{row}'
-# sheet[cell] = f'=G{row}*H{row}'
-
-
 workbook.save('middle_data/带宽.xlsx')
 
 
 # 格式化非带宽预提
 
 # 加载工作簿
-workbook = load_workbook('/Users/zhuangyuhao/Downloads/非带宽.xlsx')
+workbook = load_workbook('./middle_data/非带宽.xlsx')
 sheet = workbook.active
 
 # 定义值和公式所在的区域范围

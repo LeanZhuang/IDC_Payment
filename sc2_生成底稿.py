@@ -50,5 +50,37 @@ row = accured_table.max_row + ws1.max_row
 cell = f'R{row}'
 merged_ws[cell] = f'=SUM(R{accured_table.max_row + 4}:R{row - 1})'
 
+
+# 配置颜色
+blue = PatternFill(fill_type='solid', fgColor='ACD6FF')
+gray = PatternFill(fill_type='solid', fgColor='DFDFDF')
+
+
+for row in range(1, 2):
+    for col in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K','L','M','N','O','P','Q','R','S','T','U','V','W']:
+        cell = '{}{}'.format(col, row)
+        merged_ws[cell].fill = blue
+
+for row in range(accured_table.max_row - 3, accured_table.max_row + 1):
+    for col in ['E', 'F', 'G']:
+        cell = '{}{}'.format(col, row)
+        merged_ws[cell].fill = gray
+
+for row in range(accured_table.max_row + 3, accured_table.max_row + 4):
+    for col in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y']:
+        cell = '{}{}'.format(col, row)
+        merged_ws[cell].fill = blue
+
+for row in range(accured_table.max_row + 3 + ws1.max_row, accured_table.max_row + 4 + ws1.max_row):
+    for col in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S','T','U','V','W','X','Y','Z','AA','AB','AC']:
+        cell = '{}{}'.format(col, row)
+        merged_ws[cell].fill = blue
+
+for row in range(accured_table.max_row + ws1.max_row + ws2.max_row, accured_table.max_row + ws1.max_row + ws2.max_row + 1):
+    for col in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']:
+        cell = '{}{}'.format(col, row)
+        merged_ws[cell].fill = gray
+
+
 # 保存合并后的Excel文件
 merged_wb.save('/Users/zhuangyuhao/Desktop/【底稿】.xlsx')

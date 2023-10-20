@@ -1,11 +1,11 @@
+import os
+import glob
+import pandas as pd
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, PatternFill
-import os
-import glob
-import pandas as pd
 
 
 def prepare_accured_data():
@@ -50,7 +50,6 @@ def prepare_accured_data():
 
     formula_list2 = [f'=F{last_row + 1}-VLOOKUP("合计",Q:R,2,FALSE)',
                     f'=F{last_row + 2}-VLOOKUP("合计",H:I,2,FALSE)']
-
 
 
     # 循环遍历要输入值的列表

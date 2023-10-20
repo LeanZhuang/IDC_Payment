@@ -1,6 +1,11 @@
 import pandas as pd
 
-def prepare_accured():
+def prepare_accured() -> list:
+    """读取预提表并生成中间文件，随后生成预提表清单
+
+    Returns:
+        list: 带宽与非带宽的预提表清单
+    """
     try:
         expense_2305_bandwidth = pd.read_pickle('pkl 文件/2305 带宽.pkl')
         expense_2305_no_bandwidth = pd.read_pickle('pkl 文件/2305 非带宽.pkl')
@@ -18,7 +23,7 @@ def prepare_accured():
         expense_2309_no_bandwidth = pd.read_pickle('pkl 文件/2309 非带宽.pkl')
 
     except FileNotFoundError:
-        # 2306
+        # 2305
         expense_2305_bandwidth = pd.read_excel('/Users/zhuangyuhao/Documents/Fileport/预算表/2305 带宽.xlsx')
         expense_2305_no_bandwidth = pd.read_excel('/Users/zhuangyuhao/Documents/Fileport/预算表/2305 非带宽.xlsx')
         expense_2305_bandwidth.to_pickle('2305 带宽.pkl')
